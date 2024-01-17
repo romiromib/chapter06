@@ -27,8 +27,8 @@ public class Server {
 		System.out.println("==============================");
 		System.out.println("[연결을 기다리고 있습니다]");
 		
-		//클라이언트가 접속을 하면 accept()가 실행됨
-		Socket socket = serverSocket.accept();
+		//클라이언트가 connect(접속)를 시도하면 accept()가 실행됨
+		Socket socket = serverSocket.accept();//소켓을 만듦.(힙에..주소만들어짐)
 		System.out.println("[클라이언트가 연결 되었습니다]");
 		
 		
@@ -43,16 +43,26 @@ public class Server {
 		BufferedWriter bw = new BufferedWriter(osw);
 		
 		
-		//메세지 받기
-		String msg = br.readLine();
-		System.out.println("받은메세지: "+ msg);
+		//<<여기부터 반복>>-메세지 받기, 보내기
 		
-		//메세지 보내기
-		bw.write(msg);
-		bw.newLine();
-		bw.flush();
-		
-		
+		while(true){
+			
+			//메세지 받기
+			String msg = br.readLine();
+			if(msg==null) {
+				break;
+			}
+			
+			System.out.println("받은메세지: "+ msg);
+			
+			//메세지 보내기
+			bw.write(msg);
+			bw.newLine();
+			bw.flush();
+			
+		}
+	
+		//<<여기까지 반복>>
 		
 		//닫기
 		br.close();
